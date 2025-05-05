@@ -1,8 +1,5 @@
 package com.example.first_spring.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HelloUser {
     private String username;
     private String email;
@@ -12,6 +9,9 @@ public class HelloUser {
         this.username = username;
         this.email = email;
         this.ID = ID;
+    }
+
+    public HelloUser() {
     }
 
     public String getUsername() {
@@ -24,6 +24,21 @@ public class HelloUser {
 
     public Integer getID() {
         return ID;
+    }
+
+    public HelloUser username(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public HelloUser email(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public HelloUser ID(Integer ID) {
+        this.ID = ID;
+        return this;
     }
 
     public void setUsername(String username) {

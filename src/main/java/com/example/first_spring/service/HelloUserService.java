@@ -1,48 +1,31 @@
 package com.example.first_spring.service;
+import com.example.first_spring.dto.UserDto;
 import com.example.first_spring.model.HelloUser;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-    @Service
-    public class HelloUserService {
-        private final List<HelloUser> users = new ArrayList<>();
+@Service
+public class HelloUserService {
+    private final List<HelloUser> users;
 
-        public HelloUserService(String username, String email, Integer ID) {
-            List<HelloUserService> usersCreated = new ArrayList<>();
-        }
+    public HelloUserService() {
+        users = new ArrayList<>();
+    }
 
-        public HelloUser createUserById(String username, String email, Integer ID) {
-            for (HelloUser user : users) {
-                if (user.getID().equals(ID)) {
-                    return user;
-                }
-            }
+    public HelloUser createUser(UserDto userDto) {
+        HelloUser newUser = new HelloUser();
+        newUser.setUsername(userDto.username());
+        newUser.setEmail(userDto.username());
+        newUser.setID(userDto.ID());
+        users.add(newUser);
+        return newUser;
+    }
 
-            HelloUser newUser = new HelloUser(username, email, ID);
-            saveUser(newUser);
-            return newUser;
-        }
-
-        private void saveUser(HelloUser user) {
-            users.add(user);
-        }
-
-        public HelloUser getUserById(Integer Id) {
-                for (HelloUser user : users) {
-                if (user.getID().equals(Id)) {
-                    return user;
-                }
-            }
-            return null;
-        }
-
-//        public HelloUser removeUserById(Integer Id) {
-//            Iterator<HelloUser> iterator = users.iterator();
-//            while (iterator.hasNext()) {
-//
-            }
+    public HelloUser getUserById(Integer Id) {
+        return users.stream().filter(x -> x.getID().equals(Id)).findFirst().get();
+    }
+}
 
 
 
