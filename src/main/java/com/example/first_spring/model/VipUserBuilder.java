@@ -5,7 +5,7 @@ public class VipUserBuilder {
     private String vipUserEmail;
     private String vipUserID;
 
-    VipUserBuilder(VipUserBuilder builder) {
+    private VipUserBuilder(Builder builder) {
         this.vipUserName = builder.vipUserName;
         this.vipUserEmail = builder.vipUserEmail;
         this.vipUserID = builder.vipUserID;
@@ -27,24 +27,24 @@ public class VipUserBuilder {
         private String vipUserName;
         private String vipUserEmail;
         private String vipUserID;
-    }
 
-    public VipUserBuilder vipUserName(String vipUsername) {
-        this.vipUserName = vipUsername;
-        return this;
-    }
+        public Builder vipUserName(String vipUsername) {
+            this.vipUserName = vipUsername;
+            return this;
+        }
 
-    public VipUserBuilder vipUserEmail(String vipEmail) {
-        this.vipUserEmail = vipEmail;
-        return this;
-    }
+        public Builder vipUserEmail(String vipEmail) {
+            this.vipUserEmail = vipEmail;
+            return this;
+        }
 
-    public VipUserBuilder vipUserID(String vipID) {
-        this.vipUserID = vipID;
-        return this;
-    }
+        public Builder vipUserID(String vipID) {
+            this.vipUserID = vipID;
+            return this;
+        }
 
-    public VipUserBuilder build() {
-        return new VipUserBuilder(this);
+        public VipUserBuilder build() {
+            return new VipUserBuilder(this);
+        }
     }
 }
