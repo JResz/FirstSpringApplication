@@ -1,4 +1,5 @@
 package com.example.first_spring.controler;
+
 import com.example.first_spring.dto.UserDto;
 import com.example.first_spring.model.HelloUser;
 import com.example.first_spring.service.HelloUserService;
@@ -17,22 +18,22 @@ public class HelloController {
     }
 
     @GetMapping("/world")
-    public ResponseEntity<String> helloWorld () {
-            return new ResponseEntity<>("Hello World", HttpStatus.CREATED); //protokół https
+    public ResponseEntity<String> helloWorld() {
+        return new ResponseEntity<>("Hello World", HttpStatus.CREATED); //protokół https
     }
 
     @GetMapping("/dupa")
-    public ResponseEntity<String> hellodupa () {
+    public ResponseEntity<String> hellodupa() {
         return new ResponseEntity<>("Hello Dupa", HttpStatus.OK); //protokół https
     }
 
     @GetMapping
-    public ResponseEntity<String> hellojakub () {
+    public ResponseEntity<String> hellojakub() {
         return new ResponseEntity<>("Hello Jakub", HttpStatus.ACCEPTED); //protokół https
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<HelloUser> hellouser (@RequestBody UserDto userDto) {
+    public ResponseEntity<HelloUser> hellouser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(helloUserService.createUser(userDto), HttpStatus.CREATED); //
     }
 
