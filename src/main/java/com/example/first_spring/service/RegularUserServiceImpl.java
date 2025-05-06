@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RegularUserServiceImpl {
-
+public class RegularUserServiceImpl implements RegularUserService {
     /*
         TODO:
         - First check if the current test cases works correct
@@ -34,6 +33,7 @@ public class RegularUserServiceImpl {
         this.users = new ArrayList<>();
     }
 
+    @Override
     public boolean createUser(RegularUserDto userDto) {
         RegularUser regularUser = new RegularUser.Builder()
                 .username(userDto.username())
@@ -43,6 +43,7 @@ public class RegularUserServiceImpl {
         return users.add(regularUser);
     }
 
+    @Override
     public RegularUser getUserByUsername(String username) {
         for (RegularUser user : users) {
             if (user.getUsername().equals(username)) {
@@ -50,6 +51,11 @@ public class RegularUserServiceImpl {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<RegularUser> getAllRegularUsers() {
+        return users;
     }
 }
 
