@@ -11,7 +11,7 @@ import java.util.List;
 public class RegularUserServiceImpl implements RegularUserService {
     /*
         TODO:
-        - First check if the current test cases works correct
+        - First check if the current test cases works correct//nigga123
         and check the controller layer on POSTMAN
         - Create suitable Interface for RegularUserServiceImpl
         - Get all users
