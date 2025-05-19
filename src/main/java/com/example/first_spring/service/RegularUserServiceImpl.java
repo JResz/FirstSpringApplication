@@ -57,6 +57,27 @@ public class RegularUserServiceImpl implements RegularUserService {
     public List<RegularUser> getAllRegularUsers() {
         return users;
     }
+
+    @Override
+    public RegularUser getUserByEmail(String email) {
+        for (RegularUser user : users) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
+
+    }
+
+    @Override
+    public RegularUser changeUsername(RegularUserDto userDto) {
+        RegularUser user = getUserByUsername(userDto.username());
+        if (user == null) {
+            return null;
+        }
+        user.setUsername(userDto.username());
+        return user;
+    }
 }
 
 

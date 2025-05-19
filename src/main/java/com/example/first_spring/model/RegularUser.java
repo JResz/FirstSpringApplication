@@ -5,7 +5,7 @@ public class RegularUser {
     private String username;
     private String email;
 
-    private RegularUser(Builder builder) {
+    public RegularUser(Builder builder) {
         this.username = builder.username;
         this.email = builder.email;
     }

@@ -28,4 +28,19 @@ public class RegularUserController {
     public ResponseEntity<List<RegularUser>> getAllRegularUser() {
         return new ResponseEntity<>(regularUserService.getAllRegularUsers(), HttpStatus.OK);
     }
+
+    @GetMapping("/get")
+    public ResponseEntity<RegularUser> getUserByEmail(@RequestParam("email") String email) {
+        RegularUser user= regularUserService.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/put")
+    public ResponseEntity<RegularUser> changeUsername(String username) {
+        RegularUser user = regularUserService.getUserByUsername(username);
+        user.setUsername(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
+
+

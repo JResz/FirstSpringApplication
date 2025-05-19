@@ -12,4 +12,8 @@ public interface RegularUserService {
     RegularUser getUserByUsername(String username);
 
     List<RegularUser> getAllRegularUsers();
+
+    RegularUser getUserByEmail(String email);
+
+    RegularUser changeUsername(RegularUserDto userDto);
 }
