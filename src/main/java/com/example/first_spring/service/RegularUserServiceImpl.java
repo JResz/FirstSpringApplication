@@ -11,17 +11,12 @@ import java.util.List;
 public class RegularUserServiceImpl implements RegularUserService {
     /*
         TODO:
-        - First check if the current test cases works correct//nigga123
-        and check the controller layer on POSTMAN
-        - Create suitable Interface for RegularUserServiceImpl
-        - Get all users
-        - Get user by email
-        - Change username
+        - Fix change username
+        - Create change email
         - Create test cases for each method
         - Create controller for each method
-
-        Run all new test cases and check all controllers
-        on POSTMAN
+        - Check if the current test cases works correct
+        and check the controller layer on POSTMAN
 
         Additional:
         - Do not allow duplicate email and username during createUser
@@ -66,9 +61,21 @@ public class RegularUserServiceImpl implements RegularUserService {
             }
         }
         return null;
-
     }
 
+
+    /*
+    Good idea, but as you can see, you're finding the username
+    by existing username and setting the same username again ;).
+
+    Also, keep in mind that using, a public method inside another
+    public method can lea to issues when using inheritance.
+    If someone overrides getUserByUsername in a subclass, it
+    may break the behavior of changeUsername.
+
+    I recommend to extracting a private method for the actual lookup logic.
+    Then you can safely use that method inside getUserByUsername and changeUsername.
+    */
     @Override
     public RegularUser changeUsername(RegularUserDto userDto) {
         RegularUser user = getUserByUsername(userDto.username());

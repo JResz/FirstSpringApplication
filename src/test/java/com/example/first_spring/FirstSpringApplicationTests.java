@@ -1,3 +1,8 @@
+/*
+* ???
+* - Why RegularUserServiceTest occurs 2 times? Please create the only one case
+* in service package and delete this class
+* */
 package com.example.first_spring;
 
 import com.example.first_spring.service.RegularUserServiceImpl;

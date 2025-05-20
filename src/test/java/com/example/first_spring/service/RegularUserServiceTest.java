@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class RegularUserServiceTest {
 
-    private RegularUserServiceImpl helloUserService;
+    private final RegularUserService helloUserService;
 
     public RegularUserServiceTest() {
         this.helloUserService = new RegularUserServiceImpl();

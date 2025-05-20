@@ -15,5 +15,6 @@ public interface RegularUserService {
 
     RegularUser getUserByEmail(String email);
 
+    //No usages
     RegularUser changeUsername(RegularUserDto userDto);
 }

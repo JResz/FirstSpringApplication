@@ -29,18 +29,21 @@ public class RegularUserController {
         return new ResponseEntity<>(regularUserService.getAllRegularUsers(), HttpStatus.OK);
     }
 
+    // How to use RequestParam in url and show alternative
+    // Use the better naming strategy
     @GetMapping("/get")
     public ResponseEntity<RegularUser> getUserByEmail(@RequestParam("email") String email) {
         RegularUser user= regularUserService.getUserByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/put")
-    public ResponseEntity<RegularUser> changeUsername(String username) {
-        RegularUser user = regularUserService.getUserByUsername(username);
-        user.setUsername(username);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+//    Wrong mapping and status code
+//    @GetMapping("/put")
+//    public ResponseEntity<RegularUser> changeUsername(String username) {
+//        RegularUser user = regularUserService.getUserByUsername(username);
+//        user.setUsername(username);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
 }
 
 
