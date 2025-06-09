@@ -21,29 +21,54 @@ public class RegularUserController {
 
     @PostMapping("/add")
     public ResponseEntity<Boolean> addRegularUser(@RequestBody RegularUserDto userDto) {
-        return new ResponseEntity<>(regularUserService.createUser(userDto), HttpStatus.CREATED);
+        boolean created = regularUserService.createUser(userDto);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<RegularUser>> getAllRegularUser() {
-        return new ResponseEntity<>(regularUserService.getAllRegularUsers(), HttpStatus.OK);
+        List<RegularUser> users = regularUserService.getAllRegularUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    // How to use RequestParam in url and show alternative
-    // Use the better naming strategy
-    @GetMapping("/get")
+    @GetMapping("/{user}")
+    public ResponseEntity<RegularUser> getUserByUsername(@RequestParam("username") String username) {
+        RegularUser user = regularUserService.getUserByUsername(username);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{user}")
     public ResponseEntity<RegularUser> getUserByEmail(@RequestParam("email") String email) {
-        RegularUser user= regularUserService.getUserByEmail(email);
+        RegularUser user = regularUserService.getUserByEmail(email);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/put")
+    public ResponseEntity<RegularUser> changeUsername(@RequestParam String regularUserDto, @RequestParam String newUsernameDto) {
+        RegularUser user = regularUserService.getUserByUsername(regularUserDto);
+        if (user != null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setUsername(newUsernameDto);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-//    Wrong mapping and status code
-//    @GetMapping("/put")
-//    public ResponseEntity<RegularUser> changeUsername(String username) {
-//        RegularUser user = regularUserService.getUserByUsername(username);
-//        user.setUsername(username);
-//        return new ResponseEntity<>(user, HttpStatus.OK);
-//    }
+    @PutMapping("/put")
+    public ResponseEntity<RegularUser> changeUserEmail(@RequestParam String regularUserDto, @RequestParam String newEmailDto) {
+        RegularUser user = regularUserService.getUserByEmail(regularUserDto);
+        if (user != null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setEmail(newEmailDto);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
-
 

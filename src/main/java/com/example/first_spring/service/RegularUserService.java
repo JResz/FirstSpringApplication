@@ -1,5 +1,7 @@
 package com.example.first_spring.service;
 
+import com.example.first_spring.dto.ChangeUserEmailDto;
+import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.model.RegularUser;
 
@@ -15,6 +17,7 @@ public interface RegularUserService {
 
     RegularUser getUserByEmail(String email);
 
-    //No usages
-    RegularUser changeUsername(RegularUserDto userDto);
+    RegularUser changeUsername(ChangeUsernameDto changeUsernameDto);
+
+    RegularUser changeUserEmail(ChangeUserEmailDto changeUserEmailDto);
 }
