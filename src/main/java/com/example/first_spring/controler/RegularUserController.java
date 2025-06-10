@@ -1,5 +1,6 @@
 package com.example.first_spring.controler;
 
+import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.model.RegularUser;
 import com.example.first_spring.service.RegularUserServiceImpl;
@@ -21,54 +22,27 @@ public class RegularUserController {
 
     @PostMapping("/add")
     public ResponseEntity<Boolean> addRegularUser(@RequestBody RegularUserDto userDto) {
-        boolean created = regularUserService.createUser(userDto);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+        return new ResponseEntity<>(regularUserService.createUser(userDto), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<RegularUser>> getAllRegularUser() {
-        List<RegularUser> users = regularUserService.getAllRegularUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(regularUserService.getAllRegularUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{user}")
-    public ResponseEntity<RegularUser> getUserByUsername(@RequestParam("username") String username) {
-        RegularUser user = regularUserService.getUserByUsername(username);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/find/by/username/{username}")
+    public ResponseEntity<RegularUser> getUserByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(regularUserService.getUserByUsername(username), HttpStatus.OK);
     }
 
-    @GetMapping("/{user}")
-    public ResponseEntity<RegularUser> getUserByEmail(@RequestParam("email") String email) {
-        RegularUser user = regularUserService.getUserByEmail(email);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/find/by/email/{email}")
+    public ResponseEntity<RegularUser> getUserByEmail(@PathVariable String email) {
+        return new ResponseEntity<>(regularUserService.getUserByEmail(email), HttpStatus.OK);
     }
 
-    @PutMapping("/put")
-    public ResponseEntity<RegularUser> changeUsername(@RequestParam String regularUserDto, @RequestParam String newUsernameDto) {
-        RegularUser user = regularUserService.getUserByUsername(regularUserDto);
-        if (user != null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        user.setUsername(newUsernameDto);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @PutMapping("/put")
-    public ResponseEntity<RegularUser> changeUserEmail(@RequestParam String regularUserDto, @RequestParam String newEmailDto) {
-        RegularUser user = regularUserService.getUserByEmail(regularUserDto);
-        if (user != null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        user.setEmail(newEmailDto);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @PutMapping("/changeUsername")
+    public ResponseEntity<RegularUser> changeUsername(@RequestBody ChangeUsernameDto changeUsernameDto) {
+        return new ResponseEntity<>(regularUserService.changeUsername(changeUsernameDto), HttpStatus.CREATED);
     }
 }
 
