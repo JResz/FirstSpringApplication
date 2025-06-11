@@ -41,36 +41,22 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     @Override
     public RegularUser getUserByUsername(String username) {
-        for (RegularUser user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<RegularUser> getAllRegularUsers() {
-        return users;
+        return findRegularUserByUsernameInternally(username);
     }
 
     @Override
     public RegularUser getUserByEmail(String email) {
-        return getUser(email);
-    }
-
-    private RegularUser getUser(String email) {
-        for (RegularUser user : users) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null;
+        return findRegularUserByEmailInternally(email);
     }
 
     @Override
-    public RegularUser changeUsername(ChangeUsernameDto changeUsernameDto) {
-        RegularUser user = getUser(changeUsernameDto.email());
+    public List<RegularUser> getAllRegularUsers() {
+        return new ArrayList<>(users);
+    }
+
+    @Override
+    public RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto) {
+        RegularUser user = findRegularUserByEmailInternally(changeUsernameDto.email());
         if (user == null) {
             return null;
         }
@@ -79,12 +65,28 @@ public class RegularUserServiceImpl implements RegularUserService {
     }
 
     @Override
-    public RegularUser changeUserEmail(ChangeUserEmailDto changeUserEmailDto) {
-        RegularUser user = getUserByEmail(changeUserEmailDto.username());
+    public RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto) {
+        RegularUser user = findRegularUserByUsernameInternally(changeUserEmailDto.username());
         if (user == null) {
             return null;
         }
         user.setEmail(changeUserEmailDto.newEmail());
         return user;
+    }
+
+    private RegularUser findRegularUserByEmailInternally(String email) {
+        for (RegularUser user : users) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    private RegularUser findRegularUserByUsernameInternally(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 }

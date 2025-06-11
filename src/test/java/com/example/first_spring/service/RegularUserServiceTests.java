@@ -22,7 +22,7 @@ class RegularUserServiceTests {
         regularUserService.createUser(userDto);
 
         ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("test@gmail.com", "changedUser");
-        RegularUser changedUser = regularUserService.changeUsername(changeUsernameDto);
+        RegularUser changedUser = regularUserService.changeUsernameByEmail(changeUsernameDto);
 
         assertEquals("changedUser", changedUser.getUsername());
         assertEquals("test@gmail.com", changedUser.getEmail());

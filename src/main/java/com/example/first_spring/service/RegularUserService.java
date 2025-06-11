@@ -13,11 +13,11 @@ public interface RegularUserService {
 
     RegularUser getUserByUsername(String username);
 
-    List<RegularUser> getAllRegularUsers();
-
     RegularUser getUserByEmail(String email);
 
-    RegularUser changeUsername(ChangeUsernameDto changeUsernameDto);
+    List<RegularUser> getAllRegularUsers();
 
-    RegularUser changeUserEmail(ChangeUserEmailDto changeUserEmailDto);
+    RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto);
+
+    RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto);
 }

@@ -42,7 +42,7 @@ public class RegularUserController {
 
     @PutMapping("/changeUsername")
     public ResponseEntity<RegularUser> changeUsername(@RequestBody ChangeUsernameDto changeUsernameDto) {
-        return new ResponseEntity<>(regularUserService.changeUsername(changeUsernameDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(regularUserService.changeUsernameByEmail(changeUsernameDto), HttpStatus.CREATED);
     }
 }
 
