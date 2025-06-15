@@ -31,6 +31,14 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     @Override
     public boolean createUser(RegularUserDto userDto) {
+        for (RegularUser user : users) {
+            if (user.getUsername().equalsIgnoreCase(userDto.username())) {
+                return false;
+            }
+            if (user.getEmail().equalsIgnoreCase(userDto.email())) {
+                return false;
+            }
+        }
         RegularUser regularUser = new RegularUser.Builder()
                 .username(userDto.username())
                 .email(userDto.email())

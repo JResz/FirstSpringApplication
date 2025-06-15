@@ -1,8 +1,10 @@
 package com.example.first_spring.service;
 
+import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.model.RegularUser;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +25,19 @@ class RegularUserServiceTests {
 
         ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("test@gmail.com", "changedUser");
         RegularUser changedUser = regularUserService.changeUsernameByEmail(changeUsernameDto);
+
+        assertEquals("changedUser", changedUser.getUsername());
+        assertEquals("test@gmail.com", changedUser.getEmail());
+    }
+
+    @Test
+    @Disabled
+    void changeEmailTest() {
+        RegularUserDto userDto = new RegularUserDto("testUser", "test@gmail.com");
+        regularUserService.createUser(userDto);
+
+        ChangeUserEmailDto changeUserEmailDto = new ChangeUserEmailDto("test@gmail.com", "changedEmail");
+        RegularUser changedUser = regularUserService.changeUserEmailByUsername(changeUserEmailDto);
 
         assertEquals("changedUser", changedUser.getUsername());
         assertEquals("test@gmail.com", changedUser.getEmail());

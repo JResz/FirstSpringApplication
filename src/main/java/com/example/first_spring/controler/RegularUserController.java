@@ -1,5 +1,6 @@
 package com.example.first_spring.controler;
 
+import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.model.RegularUser;
@@ -44,5 +45,11 @@ public class RegularUserController {
     public ResponseEntity<RegularUser> changeUsername(@RequestBody ChangeUsernameDto changeUsernameDto) {
         return new ResponseEntity<>(regularUserService.changeUsernameByEmail(changeUsernameDto), HttpStatus.CREATED);
     }
+
+    @PutMapping("/changeEmail")
+    public ResponseEntity<RegularUser> changeEmail(@RequestBody ChangeUserEmailDto changeUserEmailDto) {
+        return new ResponseEntity<>(regularUserService.changeUserEmailByUsername(changeUserEmailDto), HttpStatus.CREATED);
+    }
+
 }
 
