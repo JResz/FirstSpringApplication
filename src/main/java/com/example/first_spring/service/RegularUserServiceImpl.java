@@ -3,6 +3,8 @@ package com.example.first_spring.service;
 import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
+import com.example.first_spring.exception.custom.EmailAlreadyExistsException;
+import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
 import com.example.first_spring.model.RegularUser;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +32,18 @@ public class RegularUserServiceImpl implements RegularUserService {
     }
 
     @Override
+    public void clearAll() {
+        users.clear();
+    }
+
+    @Override
     public boolean createUser(RegularUserDto userDto) {
         for (RegularUser user : users) {
             if (user.getUsername().equalsIgnoreCase(userDto.username())) {
-                return false;
+                throw new UsernameAlreadyExistsException("Username already exists!");
             }
             if (user.getEmail().equalsIgnoreCase(userDto.email())) {
-                return false;
+                throw new EmailAlreadyExistsException("Email already exists!");
             }
         }
         RegularUser regularUser = new RegularUser.Builder()

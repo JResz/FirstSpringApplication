@@ -4,10 +4,13 @@ import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.model.RegularUser;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,29 +21,38 @@ class RegularUserServiceTests {
     @Autowired
     private RegularUserService regularUserService;
 
-    @Test
-    void changeUsernameTest() {
-        RegularUserDto userDto = new RegularUserDto("testUser", "test@gmail.com");
-        regularUserService.createUser(userDto);
+    @BeforeEach
+    void setUp() {
+        RegularUserDto user1 = new RegularUserDto("user1", "user1@gmail.com");
+        RegularUserDto user2 = new RegularUserDto("user2", "user2@gmail.com");
+        RegularUserDto user3 = new RegularUserDto("user3", "user3@gmail.com");
 
-        ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("test@gmail.com", "changedUser");
-        RegularUser changedUser = regularUserService.changeUsernameByEmail(changeUsernameDto);
+        regularUserService.createUser(user1);
+        regularUserService.createUser(user2);
+        regularUserService.createUser(user3);
+    }
 
-        assertEquals("changedUser", changedUser.getUsername());
-        assertEquals("test@gmail.com", changedUser.getEmail());
+    @AfterEach
+    void tearDown() {
+        regularUserService.clearAll();
     }
 
     @Test
-    @Disabled
-    void changeEmailTest() {
-        RegularUserDto userDto = new RegularUserDto("testUser", "test@gmail.com");
-        regularUserService.createUser(userDto);
+    void changeUsernameTest() {
+        ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("user1@gmail.com", "changedUsername");
+        RegularUser changedUser = regularUserService.changeUsernameByEmail(changeUsernameDto);
 
-        ChangeUserEmailDto changeUserEmailDto = new ChangeUserEmailDto("test@gmail.com", "changedEmail");
+        assertEquals("changedUsername", changedUser.getUsername());
+        assertEquals("user1@gmail.com", changedUser.getEmail());
+    }
+
+    @Test
+    void changeEmailTest() {
+        ChangeUserEmailDto changeUserEmailDto = new ChangeUserEmailDto("user2", "newEmail");
         RegularUser changedUser = regularUserService.changeUserEmailByUsername(changeUserEmailDto);
 
-        assertEquals("changedUser", changedUser.getUsername());
-        assertEquals("test@gmail.com", changedUser.getEmail());
+        assertEquals("user2", changedUser.getUsername());
+        assertEquals("newEmail", changedUser.getEmail());
     }
 
     @Test
@@ -51,17 +63,19 @@ class RegularUserServiceTests {
 
     @Test
     void getUserByUsernameTests() {
-        RegularUserDto userDto = new RegularUserDto("niggaUser2", "nigga.223@gmail.com");
-        regularUserService.createUser(userDto);
-        RegularUser user = regularUserService.getUserByUsername("niggaUser2");
-        assertEquals("nigga.223@gmail.com", user.getEmail());
+        RegularUser user = regularUserService.getUserByUsername("user3");
+        assertEquals("user3@gmail.com", user.getEmail());
     }
 
     @Test
     void getUserByEmailTest() {
-        RegularUserDto userDto = new RegularUserDto("niggaUser2", "nigga.223@gmail.com");
-        regularUserService.createUser(userDto);
-        RegularUser user = regularUserService.getUserByEmail("nigga.223@gmail.com");
-        assertEquals("nigga.223@gmail.com", user.getEmail());
+        RegularUser user = regularUserService.getUserByEmail("user3@gmail.com");
+        assertEquals("user3@gmail.com", user.getEmail());
+    }
+
+    @Test
+    void getAllRegularUsersTest() {
+        List<RegularUser> users = regularUserService.getAllRegularUsers();
+        assertEquals(3, users.size());
     }
 }
