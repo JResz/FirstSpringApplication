@@ -16,13 +16,8 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     /*
         TODO:
-        - Create test case for changeUserEmail and getAllRegularUsers
-        - Create controllers for the rest methods in service layer
-        - Check if the current test cases works correct
-        and check the controller layer on POSTMAN
-
-        Additional:
-        - Do not allow duplicate email and username during createUser
+       Provide the suitable exceptions for the each return null
+       in this class
     */
 
     private final List<RegularUser> users;
