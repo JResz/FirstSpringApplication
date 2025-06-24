@@ -3,6 +3,8 @@ package com.example.first_spring.service;
 import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
+import com.example.first_spring.exception.custom.EmailAlreadyExistsException;
+import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
 import com.example.first_spring.model.RegularUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class RegularUserServiceTests {
@@ -77,5 +78,21 @@ class RegularUserServiceTests {
     void getAllRegularUsersTest() {
         List<RegularUser> users = regularUserService.getAllRegularUsers();
         assertEquals(3, users.size());
+    }
+
+    @Test
+    void createUserAlreadyExistsExceptionTest() {
+        RegularUserDto user = new RegularUserDto("user1", "user1test@gmail.com");
+        assertThrows(UsernameAlreadyExistsException.class, () -> {
+            regularUserService.createUser(user);
+        });
+    }
+
+    @Test
+    void createEmailAlreadyExistsExceptionTest() {
+        RegularUserDto user = new RegularUserDto("user2", "user1@gmail.com");
+        assertThrows(EmailAlreadyExistsException.class, () -> {
+            regularUserService.createUser(user);
+        });
     }
 }

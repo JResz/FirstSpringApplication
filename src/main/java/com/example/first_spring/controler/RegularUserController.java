@@ -50,6 +50,5 @@ public class RegularUserController {
     public ResponseEntity<RegularUser> changeEmail(@RequestBody ChangeUserEmailDto changeUserEmailDto) {
         return new ResponseEntity<>(regularUserService.changeUserEmailByUsername(changeUserEmailDto), HttpStatus.CREATED);
     }
-
 }
 

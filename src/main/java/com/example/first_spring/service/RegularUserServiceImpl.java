@@ -4,7 +4,9 @@ import com.example.first_spring.dto.ChangeUserEmailDto;
 import com.example.first_spring.dto.ChangeUsernameDto;
 import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.exception.custom.EmailAlreadyExistsException;
+import com.example.first_spring.exception.custom.EmailNotExistsException;
 import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
+import com.example.first_spring.exception.custom.UsernameDoesNotExistException;
 import com.example.first_spring.model.RegularUser;
 import org.springframework.stereotype.Service;
 
@@ -67,9 +69,6 @@ public class RegularUserServiceImpl implements RegularUserService {
     @Override
     public RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto) {
         RegularUser user = findRegularUserByEmailInternally(changeUsernameDto.email());
-        if (user == null) {
-            return null;
-        }
         user.setUsername(changeUsernameDto.newUsername());
         return user;
     }
@@ -77,9 +76,6 @@ public class RegularUserServiceImpl implements RegularUserService {
     @Override
     public RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto) {
         RegularUser user = findRegularUserByUsernameInternally(changeUserEmailDto.username());
-        if (user == null) {
-            return null;
-        }
         user.setEmail(changeUserEmailDto.newEmail());
         return user;
     }
@@ -90,13 +86,15 @@ public class RegularUserServiceImpl implements RegularUserService {
                 return user;
             }
         }
-        return null;
+        throw new EmailNotExistsException("This email does not exist in the database.");
     }
 
     private RegularUser findRegularUserByUsernameInternally(String username) {
         return users.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(
+                        () -> new UsernameDoesNotExistException("This username does not exist in the database")
+                );
     }
 }
