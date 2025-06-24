@@ -43,7 +43,7 @@ public class RegularUserServiceImpl implements RegularUserService {
                 throw new EmailAlreadyExistsException("Email already exists!");
             }
         }
-        RegularUser regularUser = new RegularUser.Builder()
+        RegularUser regularUser = RegularUser.builder()
                 .username(userDto.username())
                 .email(userDto.email())
                 .build();
