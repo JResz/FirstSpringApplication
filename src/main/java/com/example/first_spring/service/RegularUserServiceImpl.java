@@ -18,8 +18,11 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     /*
         TODO:
-       Provide the suitable exceptions for the each return null
-       in this class
+       When we want to change the username or email, it may
+       result in duplicate data. Prevent this situation similarly
+       to how it is handled in the createUser method. After
+       implementing the validation, create appropriate test cases
+       to cover these exceptions.
     */
 
     private final List<RegularUser> users;
