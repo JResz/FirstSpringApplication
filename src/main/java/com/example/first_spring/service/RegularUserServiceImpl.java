@@ -72,6 +72,11 @@ public class RegularUserServiceImpl implements RegularUserService {
     @Override
     public RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto) {
         RegularUser user = findRegularUserByEmailInternally(changeUsernameDto.email());
+        boolean result = users.stream()
+                        .anyMatch(username -> username.getUsername().equalsIgnoreCase(changeUsernameDto.newUsername()));
+        if (result) {
+            throw new UsernameAlreadyExistsException("This username already exists");
+        }
         user.setUsername(changeUsernameDto.newUsername());
         return user;
     }
@@ -79,6 +84,11 @@ public class RegularUserServiceImpl implements RegularUserService {
     @Override
     public RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto) {
         RegularUser user = findRegularUserByUsernameInternally(changeUserEmailDto.username());
+        boolean result = users.stream()
+                        .anyMatch(x -> x.getEmail().equalsIgnoreCase(changeUserEmailDto.newEmail()));
+        if (result) {
+            throw new EmailAlreadyExistsException("This email already exists");
+        }
         user.setEmail(changeUserEmailDto.newEmail());
         return user;
     }
