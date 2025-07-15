@@ -23,6 +23,8 @@ public class RegularUserServiceImpl implements RegularUserService {
        to how it is handled in the createUser method. After
        implementing the validation, create appropriate test cases
        to cover these exceptions.
+
+       Tests which see exception error.
     */
 
     private final List<RegularUser> users;
