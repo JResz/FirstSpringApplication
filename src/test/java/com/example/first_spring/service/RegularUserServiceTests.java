@@ -111,5 +111,5 @@ class RegularUserServiceTests {
             regularUserService.changeUserEmailByUsername(changeUserEmailDto);
         });
     }
-    }
+}
 
