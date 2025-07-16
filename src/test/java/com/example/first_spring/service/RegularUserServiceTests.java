@@ -8,7 +8,6 @@ import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
 import com.example.first_spring.model.RegularUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -99,27 +98,16 @@ class RegularUserServiceTests {
 
     @Test
     void changeUsernameByEmail_ShouldThrowException_WhenUsernameExists() {
-        RegularUserDto user = new RegularUserDto("user1", "user1@gmail.com");
-        RegularUserDto user2 = new RegularUserDto("user2", "user2@gmail.com");
-
         ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("user2@gmail.com", "user1");
         assertThrows(UsernameAlreadyExistsException.class, () -> {
-            regularUserService.createUser(user);
-            regularUserService.createUser(user2);
             regularUserService.changeUsernameByEmail(changeUsernameDto);
         });
     }
 
-    @Disabled
     @Test
     void changeEmailByUsername_ShouldThrowException_WhenEmailExists() {
-        RegularUserDto user = new RegularUserDto("user1", "user1@gmail.com");
-        RegularUserDto user2 = new RegularUserDto("user2", "user2@gmail.com");
-
         ChangeUserEmailDto changeUserEmailDto = new ChangeUserEmailDto("user1", "user2@gmail.com");
         assertThrows(EmailAlreadyExistsException.class, () -> {
-            regularUserService.createUser(user);
-            regularUserService.createUser(user2);
             regularUserService.changeUserEmailByUsername(changeUserEmailDto);
         });
     }
