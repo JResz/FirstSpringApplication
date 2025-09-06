@@ -21,13 +21,15 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     /*
         TODO:
-       When we want to change the username or email, it may
-       result in duplicate data. Prevent this situation similarly
-       to how it is handled in the createUser method. After
-       implementing the validation, create appropriate test cases
-       to cover these exceptions.
+        In MySQL, create a new user with the username test_user and password password,
+        and grant them all privileges on the regularuserdb database. This is necessary
+        to ensure the same configuration on our both laptops.
 
-       Tests which see exception error.
+        Create a method that deletes a user from the database by email, and
+        create an appropriate controller for it using @DeleteMapping.
+
+        For the next meeting:
+        Transactions should be applied to some methods in the service layer.
     */
 
     private final RegularUserRepository regularUserRepository;
@@ -69,7 +71,7 @@ public class RegularUserServiceImpl implements RegularUserService {
     public RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto) {
         RegularUser user = findRegularUserByEmailInternally(changeUsernameDto.email());
         boolean result = regularUserRepository.findAll().stream()
-                        .anyMatch(username -> username.getUsername().equalsIgnoreCase(changeUsernameDto.newUsername()));
+                .anyMatch(username -> username.getUsername().equalsIgnoreCase(changeUsernameDto.newUsername()));
         if (result) {
             throw new UsernameAlreadyExistsException("This username already exists");
         }
@@ -81,7 +83,7 @@ public class RegularUserServiceImpl implements RegularUserService {
     public RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto) {
         RegularUser user = findRegularUserByUsernameInternally(changeUserEmailDto.username());
         boolean result = regularUserRepository.findAll().stream()
-                        .anyMatch(x -> x.getEmail().equalsIgnoreCase(changeUserEmailDto.newEmail()));
+                .anyMatch(x -> x.getEmail().equalsIgnoreCase(changeUserEmailDto.newEmail()));
         if (result) {
             throw new EmailAlreadyExistsException("This email already exists");
         }

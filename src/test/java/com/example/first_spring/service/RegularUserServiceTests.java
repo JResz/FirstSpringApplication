@@ -6,8 +6,6 @@ import com.example.first_spring.dto.RegularUserDto;
 import com.example.first_spring.exception.custom.EmailAlreadyExistsException;
 import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
 import com.example.first_spring.model.RegularUser;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,17 +19,6 @@ class RegularUserServiceTests {
 
     @Autowired
     private RegularUserService regularUserService;
-
-    @BeforeEach
-    void setUp() {
-        RegularUserDto user1 = new RegularUserDto("user1", "user1@gmail.com");
-        RegularUserDto user2 = new RegularUserDto("user2", "user2@gmail.com");
-        RegularUserDto user3 = new RegularUserDto("user3", "user3@gmail.com");
-
-        regularUserService.createUser(user1);
-        regularUserService.createUser(user2);
-        regularUserService.createUser(user3);
-    }
 
     @Test
     void changeUsernameTest() {
@@ -50,12 +37,6 @@ class RegularUserServiceTests {
         assertEquals("user2", changedUser.getUsername());
         assertEquals("newEmail", changedUser.getEmail());
     }
-
-//    @Test
-//    void createUserTest() {
-//        RegularUserDto fakeUser = new RegularUserDto("username123", "username123@gmail.com");
-//        assertTrue(regularUserService.createUser(fakeUser));
-//    }
 
     @Test
     void getUserByUsernameTests() {
