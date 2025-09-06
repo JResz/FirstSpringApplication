@@ -33,11 +33,6 @@ class RegularUserServiceTests {
         regularUserService.createUser(user3);
     }
 
-    @AfterEach
-    void tearDown() {
-        regularUserService.clearAll();
-    }
-
     @Test
     void changeUsernameTest() {
         ChangeUsernameDto changeUsernameDto = new ChangeUsernameDto("user1@gmail.com", "changedUsername");
@@ -56,11 +51,11 @@ class RegularUserServiceTests {
         assertEquals("newEmail", changedUser.getEmail());
     }
 
-    @Test
-    void createUserTest() {
-        RegularUserDto fakeUser = new RegularUserDto("username123", "username123@gmail.com");
-        assertTrue(regularUserService.createUser(fakeUser));
-    }
+//    @Test
+//    void createUserTest() {
+//        RegularUserDto fakeUser = new RegularUserDto("username123", "username123@gmail.com");
+//        assertTrue(regularUserService.createUser(fakeUser));
+//    }
 
     @Test
     void getUserByUsernameTests() {

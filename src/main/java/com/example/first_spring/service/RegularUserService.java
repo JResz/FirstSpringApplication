@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface RegularUserService {
 
-    void clearAll();
-
-    boolean createUser(RegularUserDto userDto);
+    void createUser(RegularUserDto userDto);
 
     RegularUser getUserByUsername(String username);
 

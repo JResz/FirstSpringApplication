@@ -8,11 +8,14 @@ import com.example.first_spring.exception.custom.EmailNotExistsException;
 import com.example.first_spring.exception.custom.UsernameAlreadyExistsException;
 import com.example.first_spring.exception.custom.UsernameDoesNotExistException;
 import com.example.first_spring.model.RegularUser;
+import com.example.first_spring.repo.RegularUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class RegularUserServiceImpl implements RegularUserService {
 
@@ -27,20 +30,11 @@ public class RegularUserServiceImpl implements RegularUserService {
        Tests which see exception error.
     */
 
-    private final List<RegularUser> users;
-
-    public RegularUserServiceImpl() {
-        this.users = new ArrayList<>();
-    }
+    private final RegularUserRepository regularUserRepository;
 
     @Override
-    public void clearAll() {
-        users.clear();
-    }
-
-    @Override
-    public boolean createUser(RegularUserDto userDto) {
-        for (RegularUser user : users) {
+    public void createUser(RegularUserDto userDto) {
+        for (RegularUser user : regularUserRepository.findAll()) {
             if (user.getUsername().equalsIgnoreCase(userDto.username())) {
                 throw new UsernameAlreadyExistsException("Username already exists!");
             }
@@ -53,7 +47,7 @@ public class RegularUserServiceImpl implements RegularUserService {
                 .email(userDto.email())
                 .build();
 
-        return users.add(regularUser);
+        regularUserRepository.save(regularUser);
     }
 
     @Override
@@ -68,13 +62,13 @@ public class RegularUserServiceImpl implements RegularUserService {
 
     @Override
     public List<RegularUser> getAllRegularUsers() {
-        return new ArrayList<>(users);
+        return new ArrayList<>(regularUserRepository.findAll());
     }
 
     @Override
     public RegularUser changeUsernameByEmail(ChangeUsernameDto changeUsernameDto) {
         RegularUser user = findRegularUserByEmailInternally(changeUsernameDto.email());
-        boolean result = users.stream()
+        boolean result = regularUserRepository.findAll().stream()
                         .anyMatch(username -> username.getUsername().equalsIgnoreCase(changeUsernameDto.newUsername()));
         if (result) {
             throw new UsernameAlreadyExistsException("This username already exists");
@@ -86,7 +80,7 @@ public class RegularUserServiceImpl implements RegularUserService {
     @Override
     public RegularUser changeUserEmailByUsername(ChangeUserEmailDto changeUserEmailDto) {
         RegularUser user = findRegularUserByUsernameInternally(changeUserEmailDto.username());
-        boolean result = users.stream()
+        boolean result = regularUserRepository.findAll().stream()
                         .anyMatch(x -> x.getEmail().equalsIgnoreCase(changeUserEmailDto.newEmail()));
         if (result) {
             throw new EmailAlreadyExistsException("This email already exists");
@@ -96,7 +90,7 @@ public class RegularUserServiceImpl implements RegularUserService {
     }
 
     private RegularUser findRegularUserByEmailInternally(String email) {
-        for (RegularUser user : users) {
+        for (RegularUser user : regularUserRepository.findAll()) {
             if (user.getEmail().equals(email)) {
                 return user;
             }
@@ -105,7 +99,7 @@ public class RegularUserServiceImpl implements RegularUserService {
     }
 
     private RegularUser findRegularUserByUsernameInternally(String username) {
-        return users.stream()
+        return regularUserRepository.findAll().stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElseThrow(
